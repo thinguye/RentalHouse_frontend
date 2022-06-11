@@ -11986,7 +11986,7 @@ button,
 }
 
 .app-page-title {
-  padding: 1.5rem;
+  padding: 0.5rem;
   margin: -1.5rem -1.5rem 1.5rem;
   position: relative;
 }
@@ -17890,7 +17890,7 @@ legend {
 }
 .app-inner-layout .app-inner-layout__header {
   width: 100%;
-  padding: 1.5rem;
+  padding: 0.5rem;
   text-align: left;
   border-bottom: #e9ecef solid 1px;
 }
@@ -17900,7 +17900,7 @@ legend {
   background: transparent;
 }
 .app-inner-layout .app-inner-layout__header-boxed {
-  padding: 1.5rem;
+  padding: 0.5rem;
 }
 .app-inner-layout .app-inner-layout__header-boxed .app-inner-layout__header {
   border-radius: 0.3rem;

@@ -29,6 +29,7 @@ class UserBox extends React.Component {
         super(props);
         this.state = {
             active: false,
+            account: JSON.parse(sessionStorage.getItem("token"))
         };
 
     }
@@ -95,10 +96,10 @@ class UserBox extends React.Component {
                             </div>
                             <div className="widget-content-left  ms-3 header-user-info">
                                 <div className="widget-heading">
-                                    Alina Mclourd
+                                    {this.state.account.role=='admin'?"Nguyễn Mạnh Phúc":`Phòng ${this.state.account.roomId}`}
                                 </div>
                                 <div className="widget-subheading">
-                                    VP People Manager
+                                    {this.state.account.role=='admin'?"Quản lý":"Khách trọ"}
                                 </div>
                             </div>
 

@@ -38,7 +38,7 @@ export default class TitleComponent2 extends Component {
     render() {
         return (
             <Fragment>
-                <Button className="btn-shadow me-3" onClick={this.notify22} color="dark"
+                {/* <Button className="btn-shadow me-3" onClick={this.notify22} color="dark"
                         id="Tooltip-123">
                     <FontAwesomeIcon icon={faStar}/>
                 </Button>
@@ -83,7 +83,7 @@ export default class TitleComponent2 extends Component {
                             </NavItem>
                         </Nav>
                     </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
             </Fragment>
         );
     }

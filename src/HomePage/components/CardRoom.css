@@ -1,0 +1,20 @@
+.g-4 {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-left: 120px;
+}
+
+.card-rooms {
+  padding: 10px;
+}
+
+.btn-primary.book {
+  background-color: #5bb462;
+  border: #5bb462;
+  margin-left: 70px;
+  font-weight: bolder;
+}
+img{
+  width: 318px;
+  height: 318px;
+}

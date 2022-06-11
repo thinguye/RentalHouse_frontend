@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 
 import TitleComponent2 from './PageTitleExamples/Variation2'
@@ -18,23 +18,23 @@ class PageTitle extends Component {
 
         return (
 
-            <div className="app-page-title">
+            <div style={{backgroundColor:"#141e30"}} className="app-page-title">
                 <div className="page-title-wrapper">
                     <div className="page-title-heading">
                         <div
-                            className={cx("page-title-icon", {'d-none': !enablePageTitleIcon})}>
-                            <i className={icon}/>
+                            className={cx("page-title-icon", { 'd-none': !enablePageTitleIcon })}>
+                            <i className={icon} />
                         </div>
-                        <div>
-                            {heading}
+                        <div style={{color:'white'}}>
+                            <b>{heading}</b>
                             <div
-                                className={cx("page-title-subheading", {'d-none': !enablePageTitleSubheading})}>
+                                className={cx("page-title-subheading", { 'd-none': !enablePageTitleSubheading })}>
                                 {subheading}
                             </div>
                         </div>
                     </div>
                     <div className="page-title-actions">
-                        <TitleComponent2/>
+                        <TitleComponent2 />
                     </div>
                 </div>
             </div>

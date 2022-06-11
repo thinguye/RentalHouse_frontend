@@ -6,10 +6,6 @@ import {connect} from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import HeaderLogo from '../AppLogo';
-
-import SearchBox from './Components/SearchBox';
-import UserBox from './Components/UserBox';
-
 class Header extends React.Component {
     render() {
         let {
@@ -35,12 +31,6 @@ class Header extends React.Component {
                                 "app-header__content",
                                 {'header-mobile-open': enableMobileMenuSmall},
                             )}>
-                                <div className="app-header-left">
-                                    <SearchBox/>
-                                </div>
-                                <div className="app-header-right">
-                                    <UserBox/>
-                                </div>
                             </div>
                         </div>
                     </CSSTransition>

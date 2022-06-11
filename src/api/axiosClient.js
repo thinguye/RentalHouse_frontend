@@ -1,58 +1,100 @@
 import axios from 'axios';
-
 export const API_BASE_URL = 'https://localhost:7176/api';
 
-// export function GetAllRooms() {
-//   return axios.get(API_BASE_URL + '/Room');
+// function getLocalToken() {
+//     const token = window.localStorage.getItem('token')
+//     console.log('token >>>', token);
+//     return token
 // }
-// export function PostRooms() {
-//   return axios.post(API_BASE_URL + '/Room');
+
+// function getLocalRefreshToken() {
+//     const token = window.localStorage.getItem('refreshToken')
+//     return token
 // }
-// export function GetRoom() {
-//   return axios.get(API_BASE_URL + '/Room/{id}');
+
+//cau hinh axios
+
+const instance = axios.create({
+    baseURL: 'https://localhost:7176/',
+    method:"post",
+    timeout: 300000,
+   
+    headers: {
+        "Content-Type": "application/json"
+        // 'Authorization': "Bearer " + authService.getAccessToken()
+    }
+})
+
+instance.setToken = (token) => {
+    instance.defaults.headers['Authorization'] = "Bearer " + token
+}
+
+// function refreshToken () {
+//     return instance.post('/token',{
+//         refreshToken: getLocalRefreshToken()
+//     })
 // }
-// export function PutRoom() {
-//   return axios.put(API_BASE_URL + '/Room/{id}');
+
+// function getDataWithAuto() {
+//     return instance.get('/users', {
+//         params: {
+//             auto: 'yes',
+//         }
+//     })
 // }
-// export function DeleteRoom() {
-//   return axios.delete(API_BASE_URL + '/Room/{id}');
+
+// function getDataWithOutAuto() {
+//     return instance.get('/users', {
+//         params: {
+//             auto: 'no'
+//         },
+//         headers: {
+//             'x-access-token': getLocalToken() // headers token
+//         }
+//     })
 // }
-// export function GetAllGuests() {
-//   return axios.get(API_BASE_URL + '/Customer');
-// }
-// export function GetOldGuests() {
-//   return axios.get(API_BASE_URL + '/Customer/old+customers');
-// }
-// export function GetCurrenrGuests() {
-//   return axios.get(API_BASE_URL + '/Customer/current+customers');
-// }
-// export function GetGuestsByRoom() {
-//   return axios.get(API_BASE_URL + '/Customer/GetByRoom/{id}');
-// }
-// export function GetGuest() {
-//   return axios.get(API_BASE_URL + '/Customer/{id}');
-// }
-// export function GetAllBookings() {
-//   return axios.get(API_BASE_URL + '/Booking');
-// }
-// export function GetBooking() {
-//   return axios.get(API_BASE_URL + '/Booking/{id}');
-// }
-// export function GetAllBills() {
-//   return axios.get(API_BASE_URL + '/Bill');
-// }
-// export function PostBills() {
-//   return axios.post(API_BASE_URL + '/Bill');
-// }
-// export function GetBillsByRoom() {
-//   return axios.get(API_BASE_URL + '/Bill/api/Bill/GetByRoom/{id}');
-// }
-// export function GetBill() {
-//   return axios.get(API_BASE_URL + '/Bill/{id}');
-// }
-// export function PutBill() {
-//   return axios.put(API_BASE_URL + '/Bill/{id}');
-// }
-// export function DeleteBill() {
-//   return axios.delete(API_BASE_URL + '/Bill/{id}');
-// }
+
+// getToken();
+
+instance.interceptors.request.use(function (config) {
+    const token =  sessionStorage.getItem("token");
+    config.headers.Authorization = "Bearer "+ token;
+
+    return config;
+});
+
+// // response parse
+// instance.interceptors.response.use((response) => {
+
+//     const { code, auto } = response.data
+//     if (code === 401) {
+//         if (auto === 'yes') {
+//             return refreshToken().then(rs => {
+//                 console.log('get token refreshToken>>', rs.data)
+//                 const { token } = rs.data
+//                 instance.setToken(token);
+//                 const config = response.config
+//                 config.headers['x-access-token'] = token
+//                 config.baseURL = 'https://localhost:7176/'
+//                 return instance(config)
+
+//             })
+//         }
+//     }
+//     return response
+// }, error => {
+//     console.warn('Error status', error.response.status)
+//     return Promise.reject(error)
+//     // if (error.response) {
+//     //     return parseError(error.response.data)
+//     // } else {
+//     //     return Promise.reject(error)
+//     // }
+// })
+
+
+//click login de lay token va refreshtoke
+
+
+export default instance
+

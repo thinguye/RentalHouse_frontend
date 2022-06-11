@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 // import registerServiceWorker from './registerServiceWorker';
 import { unregister } from './registerServiceWorker';
 
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Router, BrowserRouter } from 'react-router-dom';
 import './assets/base.css';
-import Main from './DemoPages/Main';
+import Main from './Main';
 import configureStore from './config/configureStore';
 import { Provider } from 'react-redux';
 
@@ -26,8 +26,8 @@ const renderApp = Component => {
 renderApp(Main);
 
 if (module.hot) {
-  module.hot.accept('./DemoPages/Main', () => {
-    const NextApp = require('./DemoPages/Main').default;
+  module.hot.accept('./Main', () => {
+    const NextApp = require('./Main').default;
     renderApp(NextApp);
   });
 }
