@@ -1,16 +1,11 @@
 import React, { Component, Fragment, useState } from 'react';
-import { Button, Table, Form, Modal } from 'react-bootstrap';
+import { Button,  Form, Modal } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import instance from '../../../api/axiosClient';
 import {
-    FormGroup, Label, Input
+    Label, Input
 } from 'reactstrap';
-import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
-import { withRouter } from "react-router";
-import { Link, Redirect } from 'react-router-dom';
-import moment from 'moment';
-import $ from 'jquery';
-import { number } from 'prop-types';
+import { FaRecycle } from 'react-icons/fa';
 
 
 class UpdateRoom extends Component {
@@ -92,7 +87,7 @@ class UpdateRoom extends Component {
                             <Form>
                                 <Form.Group>
                                     <Label for='oldRoom'>Phòng cũ</Label>
-                                    <Input type='text' name='oldRoom' placeholder={this.state.oldRoom == -1 ? "Không" : this.state.oldRoom} disabled />
+                                    <Input type='text' name='oldRoom' placeholder={this.state.oldRoom === -1 ? "Không" : this.state.oldRoom} disabled />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label for="roomNew">Phòng mới</Form.Label>
@@ -107,7 +102,7 @@ class UpdateRoom extends Component {
                                     </Form.Select>
                                 </Form.Group>
                                 <div style={{ marginTop: '2rem' }} className='text-center'>
-                                    <Button onClick={(e) => this.handleShow()} color="primary">Đổi phòng</Button>
+                                    <Button onClick={(e) => this.handleShow()} color="primary"><FaRecycle/>Đổi phòng</Button>
                                 </div>
                             </Form>
                             <Modal

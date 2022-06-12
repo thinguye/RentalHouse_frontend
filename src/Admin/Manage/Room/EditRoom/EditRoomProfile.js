@@ -1,15 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Table, Form} from 'react-bootstrap';
+import { Button, Form} from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import instance from '../../../../api/axiosClient';
 import {
-    Col, Row, FormGroup, Label, Input
+    Row, FormGroup, Label, Input
 } from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom';
-import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
 import { Redirect } from 'react-router-dom';
 
-class EditRoomProfile extends Component {
+export default class EditRoomProfile extends Component {
 
     state = {
         id: sessionStorage.getItem("roomId"),
@@ -80,7 +78,7 @@ class EditRoomProfile extends Component {
     };
 
     renderRedirect = () => {
-        if (this.state.redirect == true) {
+        if (this.state.redirect === true) {
             return <Redirect to='/manage/rooms' />;
         }
     }
@@ -101,7 +99,7 @@ class EditRoomProfile extends Component {
                                 <FormGroup>
                                     <Label for="name">Phòng</Label>
                                     <Input type="text" name="name" id="name"
-                                        placeholder="Nhập số phòng" value={this.state.name} />
+                                        placeholder="Nhập số phòng" value={this.state.name} onChange={this.onNameChange}/>
                                 </FormGroup>
                             </Row>
                             <FormGroup>
@@ -143,4 +141,3 @@ class EditRoomProfile extends Component {
     }
 };
 
-export default withRouter(EditRoomProfile);

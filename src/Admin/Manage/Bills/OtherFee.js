@@ -1,14 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import instance from '../../../api/axiosClient';
 import {
     Col, Row, Form, FormGroup, Label, Input
 } from 'reactstrap';
-import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
-import { withRouter } from "react-router";
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+import { FaSave } from 'react-icons/fa';
 
 
 class OtherFee extends Component {

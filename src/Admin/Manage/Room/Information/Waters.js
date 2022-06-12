@@ -1,14 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Button, ButtonGroup, Table } from 'react-bootstrap';
+import { Button,  Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import {
-    Row, Col,
-    Card, CardBody,
-    CardTitle
+    Row, Col
 } from 'reactstrap';
 import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
-import { Tab } from 'bootstrap';
 import instance from '../../../../api/axiosClient';
 import 'jquery/dist/jquery.min.js';
 

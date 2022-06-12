@@ -38,22 +38,22 @@ class RoomProfile extends Component {
                         <Form>
                             <Row>
                                 <FormGroup>
-                                    <Label for="name">Phòng</Label>
-                                    <Input type="text" name="name" id="name" value={this.state.room.name} />
+                                    <Label style={{color:'blue'}} for="name">Phòng</Label>
+                                    <Input style={{color:'black'}} disabled type="text" name="name" id="name" value={this.state.room.name} />
                                 </FormGroup>
                             </Row>
                             <FormGroup>
-                                <Label for="price">Giá phòng</Label>
-                                <Input type="text" name="price" id="price"
+                                <Label style={{color:'blue'}} for="price">Giá phòng</Label>
+                                <Input style={{color:'black'}} disabled type="text" name="price" id="price"
                                     placeholder="Nhập giá phòng" value={this.state.room.price} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="state">Trạng thái</Label>
-                                <Input type="text" name="state" id="state" value={this.state.room.state} />
+                                <Label style={{color:'blue'}} for="state">Trạng thái</Label>
+                                <Input style={{color:'black'}} disabled type="text" name="state" id="state" value={this.state.room.state} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="des">Mô tả</Label>
-                                <Input type="text" name="des" id="des"
+                                <Label style={{color:'blue'}} for="des">Mô tả</Label>
+                                <Input style={{color:'black'}} disabled type="text" name="des" id="des"
                                     placeholder="Nhập số khách trong phòng" value={this.state.room.description} />.
                             </FormGroup>
                         </Form>

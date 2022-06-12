@@ -1,12 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Table, Form, Modal, ButtonGroup } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import instance from '../../../api/axiosClient';
-import { Row, Col, Input, Label } from 'reactstrap';
-import { FaTrashAlt, FaEye, FaPlus, FaRegSave, FaCircle } from 'react-icons/fa';
-import { AiOutlineClear } from 'react-icons/ai';
-import { withRouter } from "react-router";
-import { Link } from 'react-router-dom';
+import { Row, Col } from 'reactstrap';
+import { FaTrashAlt, FaPlus, FaCircle } from 'react-icons/fa';
 import moment from 'moment';
 import 'jquery/dist/jquery.min.js';
 
@@ -55,7 +52,7 @@ export default class RepairList extends Component {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                const repairs = this.state.repairs.filter(item => item.id != id);
+                const repairs = this.state.repairs.filter(item => item.id !== id);
                 this.setState({ repairs });
                 this.setState({
                     show: false
@@ -93,9 +90,9 @@ export default class RepairList extends Component {
     
 
     setColor(status) {
-        if (status == "Đang Đợi") {
+        if (status === "Đang Đợi") {
             return "gray"
-        } else if (status == "Đang Sửa Chữa") {
+        } else if (status === "Đang Sửa Chữa") {
             return "orange"
         }
         return "green"

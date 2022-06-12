@@ -1,5 +1,5 @@
 import { Route, Redirect } from "react-router-dom";
-import React, { Suspense, lazy, Fragment, useState } from 'react';
+import React, { Suspense, lazy, Fragment } from 'react';
 
 import {
     ToastContainer,
@@ -12,6 +12,16 @@ const Manage = lazy(() => import('./Admin/Manage'));
 const OtherAdmin = lazy(() => import('./Admin/OtherAdmin'));
 const Home = lazy(() => import('./HomePage/components/Home'));
 const Other = lazy(()=> import('./User/Other'));
+const role = sessionStorage.getItem("role");
+function setRedirect(){
+    if (role==="admin"){
+        return "/dashboard"
+    }else if(role==="user"){
+        return "/room"
+    }
+    return "/home"
+}
+
 function App() {
     
     return (
@@ -85,7 +95,7 @@ function App() {
             </Suspense>
 
             <Route exact path="/" render={() => (
-                <Redirect to="/home" />
+                <Redirect to={setRedirect()} />
             )} />
             <ToastContainer />
         </Fragment>

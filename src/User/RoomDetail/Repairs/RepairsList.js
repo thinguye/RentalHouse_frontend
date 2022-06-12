@@ -72,7 +72,7 @@ export default class RepairsList extends Component {
                                     </thead>
                                     <tbody>
                                         {this.state.repairs.map((repair) => (
-                                            <tr v-for="item in tableItems" key={repair.id}>
+                                            <tr v-for="item in tableItems" key={repair.id} style={{borderTop:"none"}}>
                                                 <td>{moment(repair.date).format('DD-MM-YYYY')}</td>
                                                 <td>{repair.description}</td>
                                                 <td style={{color:(repair.status=="Đang Sửa Chữa"?"orange":(repair.status=="Đã Hoàn Thành"?"green":"dark"))}}>{repair.status}</td>

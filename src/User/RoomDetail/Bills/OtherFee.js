@@ -101,35 +101,35 @@ class OtherFee extends Component {
                             <Form>
                                 <FormGroup>
                                     <Row>
-                                        <Col><Label>Giá điện</Label></Col>
+                                        <Col><Label style={{color:'blue'}}>Giá điện</Label></Col>
                                         <Col><Input disabled value={this.state.electricFee} /></Col>
                                         <Col>VNĐ/kWh</Col>
                                     </Row>
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col><Label>Giá nước</Label></Col>
+                                        <Col><Label style={{color:'blue'}}>Giá nước</Label></Col>
                                         <Col><Input disabled value={this.state.waterFee} /></Col>
                                         <Col>VNĐ/m<sup>3</sup></Col>
                                     </Row>
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col><Label>Tiền rác</Label></Col>
+                                        <Col><Label style={{color:'blue'}}>Tiền rác</Label></Col>
                                         <Col><Input disabled value={this.state.garbageFee} /></Col>
                                         <Col>VNĐ/phòng</Col>
                                     </Row>
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col><Label>Phí wi-fi</Label></Col>
+                                        <Col><Label style={{color:'blue'}}>Phí wi-fi</Label></Col>
                                         <Col><Input disabled value={this.state.wifiFee} /></Col>
                                         <Col>VNĐ/phòng</Col>
                                     </Row>
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col><Label>Thêm người(cho phòng từ 3 người trở lên)</Label></Col>
+                                        <Col><Label style={{color:'blue'}}>Thêm người(cho phòng từ 3 người trở lên)</Label></Col>
                                         <Col><Input disabled value={this.state.bonusPeopleFee} /></Col>
                                         <Col>VNĐ/người</Col>
                                     </Row>

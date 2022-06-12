@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import registerServiceWorker from './registerServiceWorker';
 import { unregister } from './registerServiceWorker';
 
-import { HashRouter, Router, BrowserRouter } from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import './assets/base.css';
 import Main from './Main';
 import configureStore from './config/configureStore';
@@ -32,6 +31,4 @@ if (module.hot) {
   });
 }
 unregister();
-
-// registerServiceWorker();
 

@@ -5,7 +5,7 @@ import instance from '../../../../api/axiosClient';
 import { Row, Col, Input, Label, Form, FormGroup } from 'reactstrap';
 import { FaTrashAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { withRouter } from "react-router";
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 
@@ -20,7 +20,6 @@ class Guests extends Component {
         name: '',
         id: '',
         showAdd: false,
-        name: '',
         id_Number: '',
         doB: '',
         hometown: '',

@@ -24,3 +24,6 @@ i.bi.bi-eye{
     right: 150px;
     bottom: 20px;
 }
+.alert{
+    position: fixed;
+}

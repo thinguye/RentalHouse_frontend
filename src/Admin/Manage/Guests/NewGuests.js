@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle, Table } from 'react-bootstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import instance from '../../../api/axiosClient';
 import { Row, Col } from 'reactstrap';
-import { FaTrashAlt, FaPencilAlt, FaPlus } from 'react-icons/fa';
-import { Link, Redirect } from 'react-router-dom';
+import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
+import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 import {
     toast,
