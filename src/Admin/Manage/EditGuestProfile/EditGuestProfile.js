@@ -1,13 +1,12 @@
-import React, { Component, Fragment, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import React, { Component, Fragment } from "react";
+import { Button } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import axios from "axios";
 import instance from "../../../api/axiosClient";
 import { Col, Row, FormGroup, Label, Input, Form } from "reactstrap";
-import { FaTrashAlt, FaPencilAlt, FaSave } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
 import moment from "moment";
+import { Moment } from "moment";
 
 class EditGuestProfile extends Component {
   state = {
@@ -28,8 +27,12 @@ class EditGuestProfile extends Component {
   };
 
   componentDidMount() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      window.location.href = "/";
+    }
     instance
       .get(`api/Customer/${this.state.id}`)
+
       .then((res) => {
         const guest = res.data;
         const name = guest.name;
@@ -58,14 +61,13 @@ class EditGuestProfile extends Component {
           room,
           nationality,
         });
+        instance.get(`api/Room/GetRoomById/${room}`).then((res) => {
+          const roomUser = res.data;
+          const roomName = roomUser.name;
+          this.setState({ roomName });
+        });
       })
       .catch((error) => console.log(error));
-    instance.get(`api/Room/GetRoomById/${this.state.room}`).them((res) => {
-      const room = res.data;
-      this.setState({
-        roomName: room.name,
-      });
-    });
   }
 
   onNameChange = (e) => {
@@ -151,14 +153,16 @@ class EditGuestProfile extends Component {
       phone: this.state.phone,
       room: this.state.room,
       startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      endDate: this.state.room === -1 ? this.state.endDate : new Date(),
     };
     console.log(data);
     instance
       .put(`api/Customer/Edit/${this.state.id}`, data)
       .then((res) => {
         console.log(res);
-        window.location.reload();
+        if (res) {
+          window.location.reload();
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -274,8 +278,8 @@ class EditGuestProfile extends Component {
                   <Input
                     name="room"
                     type="text"
-                    placeholder={
-                      this.state.room == -1 ? "Không" : this.state.room
+                    value={
+                      this.state.room === -1 ? "Không" : this.state.roomName
                     }
                     disabled
                   />

@@ -1,14 +1,22 @@
-import React from 'react'
-import { Card, Button, Modal, Form, Row, Col, Container } from 'react-bootstrap'
-import logo from './images/room-3.jpg'
-import './CardRoom.css'
-import { FaHome, FaDollarSign, FaCalendarCheck } from 'react-icons/fa'
-import { FcMoneyTransfer, FcCheckmark } from 'react-icons/fc'
-import instance from '../../api/axiosClient'
-import room1 from './images/room-3.jpg'
-import room2 from './images/room-4.jpg'
-import slide1 from './images/slider1.jpg'
-import slide2 from './images/slider2.jpg'
+import React from "react";
+import {
+  Card,
+  Button,
+  Modal,
+  Form,
+  Row,
+  Col,
+  Container,
+} from "react-bootstrap";
+import logo from "./images/room-3.jpg";
+import "./CardRoom.css";
+import { FaHome, FaDollarSign, FaCalendarCheck } from "react-icons/fa";
+import { FcMoneyTransfer, FcCheckmark } from "react-icons/fc";
+import instance from "../../api/axiosClient";
+import room1 from "./images/room-3.jpg";
+import room2 from "./images/room-4.jpg";
+import slide1 from "./images/slider1.jpg";
+import slide2 from "./images/slider2.jpg";
 
 export default class CardRoom extends React.Component {
   state = {
@@ -20,30 +28,31 @@ export default class CardRoom extends React.Component {
     status: false,
     createDate: "",
     rooms: [],
-  }
+  };
 
   imageRoom = [room1, room2, slide1, slide2];
 
   componentDidMount() {
-    instance.get(`api/Room`)
-      .then(res => {
+    instance
+      .get(`api/Room`)
+      .then((res) => {
         const rooms = res.data;
         this.setState({ rooms });
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }
 
   handleClose = (e) => {
     this.setState({
-      show: false
-    })
-  }
+      show: false,
+    });
+  };
   handleShow = (id) => {
     this.setState({
       show: true,
-      room: id
-    })
-  }
+      room: id,
+    });
+  };
   handleSubmit = (e) => {
     const data = {
       name: this.state.name,
@@ -51,68 +60,94 @@ export default class CardRoom extends React.Component {
       room: this.state.room,
       note: this.state.note,
       status: false,
-      createDate: new Date()
-    }
-    instance.post(`api/Booking`, data)
-      .then(res => {
-        this.setState({
-          show: false
-        })
-        window.location.reload()
-      })
-  }
+      createDate: new Date(),
+    };
+    instance.post(`api/Booking`, data).then((res) => {
+      this.setState({
+        show: false,
+      });
+      window.location.reload();
+    });
+  };
   onNameChange = (e) => {
     this.setState({
-      name: e.target.value
-    })
-  }
+      name: e.target.value,
+    });
+  };
   onPhoneChange = (e) => {
     this.setState({
-      phone: e.target.value
-    })
-  }
+      phone: e.target.value,
+    });
+  };
   onNotesChange = (e) => {
     this.setState({
-      note: e.target.value
-    })
-  }
+      note: e.target.value,
+    });
+  };
   setDisabledButton(status) {
     if (status != "Còn Trống") {
-      return "disabled"
+      return "disabled";
     }
-    return ""
+    return "";
   }
   setColor(status) {
     if (status == "Còn Trống") {
-      return 'green'
+      return "green";
     }
-    return 'red'
+    return "red";
   }
   render() {
     return (
       <Container fluid>
-        <Row md={3} xs={1} className='g-4'>
+        <Row md={3} xs={1} className="g-4">
           {this.state.rooms.map((room) => (
-            <div className='room-content'>
-              <Card style={{ width: '20rem', marginTop: '2.5rem', marginBottom: '2.5rem' }} key={room.id}>
-                <Card.Img variant="top" src={this.imageRoom[room.id % this.imageRoom.length]} />
+            <div className="room-content">
+              <Card
+                style={{
+                  width: "20rem",
+                  marginTop: "2.5rem",
+                  marginBottom: "2.5rem",
+                }}
+                key={room.id}
+              >
+                <Card.Img
+                  variant="top"
+                  src={this.imageRoom[room.id % this.imageRoom.length]}
+                />
                 <Card.Body>
-                  <Card.Title><FaHome /> Phòng {room.name}</Card.Title>
+                  <Card.Title>
+                    <FaHome /> Phòng {room.name}
+                  </Card.Title>
                   <Card.Text>
-                    <p><FcMoneyTransfer /> Giá: {room.price} VNĐ</p>
-                    <p><FcCheckmark /> Trạng thái: <span style={{ color: this.setColor(room.state) }}>{room.state}</span></p></Card.Text>
-                  <div className='text-center'>
-                    <Button style={{ color: 'white' }} variant="success" className={this.setDisabledButton(room.state)} onClick={(e) => this.handleShow(room.id)}>
+                    <p>
+                      <FcMoneyTransfer /> Giá:{" "}
+                      {Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(room.price)}
+                    </p>
+                    <p>
+                      <FcCheckmark /> Trạng thái:{" "}
+                      <span style={{ color: this.setColor(room.state) }}>
+                        {room.state}
+                      </span>
+                    </p>
+                  </Card.Text>
+                  <div className="text-center">
+                    <Button
+                      style={{ color: "white" }}
+                      variant="success"
+                      className={this.setDisabledButton(room.state)}
+                      onClick={(e) => this.handleShow(room.id)}
+                    >
                       <b>Đặt Phòng</b>
                     </Button>
                   </div>
                 </Card.Body>
               </Card>
             </div>
-
           ))}
         </Row>
-
 
         <Modal show={this.state.show} onHide={(e) => this.handleClose()}>
           <Modal.Header closeButton>
@@ -120,7 +155,10 @@ export default class CardRoom extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Họ và Tên</Form.Label>
                 <Form.Control
                   type="text"
@@ -132,7 +170,10 @@ export default class CardRoom extends React.Component {
                   required
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
                 <Form.Label>Số điện thoại</Form.Label>
                 <Form.Control
                   type="tel"
@@ -144,14 +185,15 @@ export default class CardRoom extends React.Component {
                   required
                 />
               </Form.Group>
-              <Form.Group
-                className="mb-3"
-              >
+              <Form.Group className="mb-3">
                 <Form.Label>Ghi chú</Form.Label>
-                <Form.Control as="textarea" rows={3}
+                <Form.Control
+                  as="textarea"
+                  rows={3}
                   name="notes"
                   onChange={this.onNotesChange}
-                  value={this.state.note} />
+                  value={this.state.note}
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -164,7 +206,7 @@ export default class CardRoom extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
-      </Container >
+      </Container>
     );
   }
 }

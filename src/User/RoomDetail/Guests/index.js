@@ -10,7 +10,7 @@ import Guests from './Guests';
 
 const tabsContent = [
     {
-        title: 'Thông tin phòng',
+        title: 'Danh sách khách trọ',
         content: <Guests />
     },
 ];
@@ -30,9 +30,8 @@ export default class GuestByRoom extends React.Component {
         return (
             <Fragment>
                 <PageTitle
-                    heading="DANH SÁCH KHÁCH TRỌ PHÒNG"
-                    subheading="Multiple styles, actions and effects are available for the Archited Framework dropdown buttons."
-                    icon="pe-7s-pencil icon-gradient bg-sunny-morning"
+                    heading="KHÁCH TRỌ TRONG PHÒNG"
+                    icon="pe-7s-users icon-gradient bg-malibu-beach"
                 />
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()} />
             </Fragment>

@@ -29,6 +29,9 @@ class BillList extends Component {
   list = [];
 
   componentDidMount() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      window.location.href = "/";
+    }
     instance
       .get(`api/Bill`)
       .then((res) => {
@@ -38,7 +41,7 @@ class BillList extends Component {
       .catch((error) => console.log(error));
     $(document).ready(function () {
       setTimeout(function () {
-        $("#example").dataTable({
+        $("#billLists").dataTable({
           language: {
             search: "Tìm kiếm:",
             info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
@@ -59,7 +62,7 @@ class BillList extends Component {
             { orderable: false },
           ],
         });
-      }, 1000);
+      }, 100);
     });
   }
 
@@ -146,7 +149,7 @@ class BillList extends Component {
               exit={false}
             >
               <div>
-                <Table id="example" style={{ borderColor: "gray" }}>
+                <Table id="billLists" style={{ borderColor: "gray" }}>
                   <thead style={{ color: "blue" }}>
                     <tr>
                       <td className="text-center">Mã hóa đơn</td>

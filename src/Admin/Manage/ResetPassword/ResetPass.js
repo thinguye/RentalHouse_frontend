@@ -16,6 +16,11 @@ export default class ResetPass extends Component {
         alertback: "",
     }
 
+    componentDidMount(){
+        if (sessionStorage.getItem("role") !== "admin") {
+            window.location.href = "/";
+          }
+    }
     onPasswordChange = e => {
         this.setState({
             password: e.target.value
@@ -87,20 +92,16 @@ export default class ResetPass extends Component {
                         <div style={{ maxWidth: '50%' }}>
                             <Form>
                                 <FormGroup>
-                                    <Label for="username">Nhập tên đăng nhập</Label>
+                                    <Label>Nhập tên đăng nhập</Label>
                                     <Input type="text"
                                         onChange={this.onUsernameChange}
-                                        name="username"
-                                        id="username"
                                         placeholder="Nhập tên đăng nhập"
                                         required
-                                        value={this.state.username} />.
+                                        value={this.state.username} />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="password">Mật khẩu mới</Label>
+                                    <Label>Mật khẩu mới</Label>
                                     <Input type="password"
-                                        name="password"
-                                        id="password"
                                         onChange={this.onPasswordChange}
                                         required
                                         placeholder="Nhập mật khẩu mới"

@@ -5,7 +5,7 @@ import instance from '../../../../api/axiosClient';
 import {
     Row, FormGroup, Label, Input
 } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import {FaSave} from 'react-icons/fa'
 
 export default class EditRoomProfile extends Component {
 
@@ -17,10 +17,12 @@ export default class EditRoomProfile extends Component {
         price: 0,
         description: '',
         date: new Date(),
-        redirect: false
     }
 
     componentDidMount() {
+        if (sessionStorage.getItem("role") !== "admin") {
+            window.location.href = "/";
+          }
         instance.get(`api/Room/GetRoomById/${this.state.id}`)
             .then(res => {
                 const room = res.data;
@@ -61,7 +63,6 @@ export default class EditRoomProfile extends Component {
     };
 
     handleSubmit = e => {
-        e.preventDefault();
         const data = {
             id: this.state.id,
             name: this.state.name,
@@ -72,16 +73,13 @@ export default class EditRoomProfile extends Component {
             date: this.state.date
         };
         instance.put(`api/Room`, data)
-            .then(res => console.log(res))
+            .then((res) => {
+                if (res){
+                    window.location.href="/manage/rooms"
+                }
+            })
             .catch(err => console.log(err));
-        this.setState({ redirect: true })
     };
-
-    renderRedirect = () => {
-        if (this.state.redirect === true) {
-            return <Redirect to='/manage/rooms' />;
-        }
-    }
 
     render() {
         return (
@@ -97,22 +95,21 @@ export default class EditRoomProfile extends Component {
                         <Form>
                             <Row>
                                 <FormGroup>
-                                    <Label for="name">Phòng</Label>
-                                    <Input type="text" name="name" id="name"
+                                    <Label>Phòng</Label>
+                                    <Input type="text"
                                         placeholder="Nhập số phòng" value={this.state.name} onChange={this.onNameChange}/>
                                 </FormGroup>
                             </Row>
                             <FormGroup>
-                                <Label for="price">Giá phòng</Label>
-                                <Input type="text" name="price" id="price"
+                                <Label>Giá phòng</Label>
+                                <Input type="text"
                                     placeholder="Nhập giá phòng" value={this.state.price}
                                     onChange={this.onPriceChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="state">Trạng thái</Label>
+                                <Label>Trạng thái</Label>
                                 <Form.Control
                                     as="select"
-                                    id="state"
                                     value={this.state.state}
                                     onChange={this.onStateChange}
                                 >
@@ -123,15 +120,14 @@ export default class EditRoomProfile extends Component {
                                 </Form.Control>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="des">Mô tả</Label>
-                                <Form.Control as="textarea" id="des"
+                                <Label>Mô tả</Label>
+                                <Form.Control as="textarea"
                                     placeholder="" value={this.state.description}
                                     onChange={this.onDescriptionChange} row={5}>
-                                    </Form.Control>
+                                </Form.Control>
                             </FormGroup>
-                            <div>
-                                {this.renderRedirect()}
-                                <Button onClick={this.handleSubmit} type="submit" color="primary">Lưu chỉnh sửa</Button>
+                            <div className='text-center'>
+                                <Button onClick={(e)=>this.handleSubmit()} style={{border:"none"}} type="submit" variant="outline-primary"><FaSave/> Lưu chỉnh sửa</Button>
                             </div>
                         </Form>
                     </CSSTransition>

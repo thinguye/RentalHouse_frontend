@@ -44,7 +44,7 @@ export default class ElectricBills extends Component {
           },
           columns: [{ orderable: false }, null, null, null, null, null],
         });
-      }, 1000);
+      }, 100);
     });
   }
 

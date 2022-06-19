@@ -7,7 +7,7 @@
     padding-left: 16px;
 }
 .btn-login{
-    padding: 4px 10px;
+    padding: 0px 10px;
     border: 1px solid var(--primary-color);
     border-radius: 4px;
     cursor: pointer;
@@ -17,7 +17,7 @@
     display: inline-block;
 }
 .btn-login:hover{
-    background-color: green;
+    text-decoration: underline;
 }
 i.bi.bi-eye{
     position: absolute;

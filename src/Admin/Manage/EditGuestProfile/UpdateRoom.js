@@ -13,7 +13,8 @@ class UpdateRoom extends Component {
         id: 0,
         roomId: 1,
         name: '',
-        oldRoom: 0,
+        oldRoom: '',
+        newRoom:'',
         rooms: [],
         show: false
     }
@@ -23,10 +24,18 @@ class UpdateRoom extends Component {
         instance.get(`api/Customer/${id}`)
             .then(res => {
                 const guest = res.data;
-                const oldRoom = guest.room;
+                const oldRoomId = guest.room;
+                instance.get(`api/Room/GetRoomById/${oldRoomId}`)
+                .then(res=>{
+                    const dt = res.data
+                    const oldRoom = dt.name
+                    this.setState({
+                        oldRoom
+                    })
+                })
                 const name = guest.name;
                 console.log(res.data);
-                this.setState({ id, name, oldRoom });
+                this.setState({ id, name});
             })
             .catch(error => console.log(error));
         instance.get(`api/Room`)
@@ -43,7 +52,6 @@ class UpdateRoom extends Component {
         this.setState({
             roomId: e.target.value
         });
-        console.log(this.state.roomId);
     };
 
     handleSubmit = () => {
@@ -87,7 +95,7 @@ class UpdateRoom extends Component {
                             <Form>
                                 <Form.Group>
                                     <Label for='oldRoom'>Phòng cũ</Label>
-                                    <Input type='text' name='oldRoom' placeholder={this.state.oldRoom === -1 ? "Không" : this.state.oldRoom} disabled />
+                                    <Input type='text' name='oldRoom' value={this.state.oldRoom === "" ? "Không" : this.state.oldRoom} disabled />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label for="roomNew">Phòng mới</Form.Label>
@@ -101,10 +109,10 @@ class UpdateRoom extends Component {
                                         ))}
                                     </Form.Select>
                                 </Form.Group>
-                                <div style={{ marginTop: '2rem' }} className='text-center'>
+                            </Form>
+                            <div style={{ marginTop: '2rem' }} className='text-center'>
                                     <Button onClick={(e) => this.handleShow()} color="primary"><FaRecycle/>Đổi phòng</Button>
                                 </div>
-                            </Form>
                             <Modal
                                 show={this.state.show}
                                 onHide={(e) => this.handleClose()}
@@ -114,7 +122,7 @@ class UpdateRoom extends Component {
                                     <Modal.Title>Xác nhận</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    Bạn muốn đổi {this.state.name} sang phòng {this.state.roomId}?
+                                    Bạn muốn đổi phòng cho {this.state.name}?
                                 </Modal.Body>
                                 <Modal.Footer>
                                     <Button variant="success" onClick={(e) => this.handleSubmit()}>

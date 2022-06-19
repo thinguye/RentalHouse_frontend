@@ -26,7 +26,6 @@ class Header extends React.Component {
                         <div>
 
                             <HeaderLogo/>
-
                             <div className={cx(
                                 "app-header__content",
                                 {'header-mobile-open': enableMobileMenuSmall},

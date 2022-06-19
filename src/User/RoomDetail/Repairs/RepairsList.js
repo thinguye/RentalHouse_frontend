@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { Button, ButtonGroup, FormControl, FormGroup, FormLabel, Modal, ModalBody, ModalHeader, ModalTitle, Table } from 'react-bootstrap';
+import { Button, FormControl, Table } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import {
-    Row, Col,
-    Card, CardBody,
-    CardTitle
+    Row, Col
 } from 'reactstrap';
-import { FaTrashAlt, FaPencilAlt, FaPlus, FaEye } from 'react-icons/fa';
-import { Tab } from 'bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
 import instance from '../../../api/axiosClient';
 import moment from 'moment';
 

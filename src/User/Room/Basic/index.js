@@ -29,9 +29,8 @@ export default class Room extends React.Component {
         return (
             <Fragment>
                 <PageTitle
-                    heading="THÔNG TIN PHÒNG"
-                    subheading="Multiple styles, actions and effects are available for the Archited Framework dropdown buttons."
-                    icon="pe-7s-pencil icon-gradient bg-sunny-morning"
+                    heading="TRANG CHỦ"
+                    icon="pe-7s-home icon-gradient bg-sunny-morning"
                 />
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()} />
             </Fragment>

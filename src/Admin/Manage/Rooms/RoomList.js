@@ -1,14 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button, Table, Modal } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import {
-  Row,
-  Col,
-  Input,
-  Label,
-  Form,
-  FormGroup,
-} from "reactstrap";
+import { Row, Col, Input, Label, Form, FormGroup } from "reactstrap";
 import { FaTrashAlt, FaPencilAlt, FaPlus, FaEye } from "react-icons/fa";
 import { Redirect } from "react-router-dom";
 import instance from "../../../api/axiosClient";
@@ -41,6 +34,9 @@ export default class RoomList extends Component {
     date: new Date(),
   };
   componentDidMount() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      window.location.href = "/";
+    }
     instance
       .get("api/Room")
       .then((res) => {
@@ -50,7 +46,7 @@ export default class RoomList extends Component {
       .catch((error) => console.log(error));
     $(document).ready(function () {
       setTimeout(function () {
-        $("#example").dataTable({
+        $("#roomList").dataTable({
           language: {
             search: "Tìm kiếm:",
             info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ phòng",
@@ -62,22 +58,26 @@ export default class RoomList extends Component {
               previous: "Trang đầu",
             },
           },
-          columns: [null, null, null, null, null, { orderable: false }],
+          columns: [
+            { type: "text" },
+            null,
+            { type: "currency" },
+            null,
+            null,
+            { orderable: false },
+          ],
         });
-      }, 1000);
+      }, 100);
     });
   }
 
-  deleteRoom = (id, e) => {
-    instance.delete(`api/Room/${id}`).then((res) => {
+  deleteRoom = () => {
+    instance.delete(`api/Room/${this.state.id}`).then((res) => {
       console.log(res);
-      console.log(res.data);
-      const rooms = this.state.rooms.filter((item) => item.id !== id);
-      this.setState({ rooms });
-      this.setState({ showDelete: true });
+      this.setState({ showDelete: false });
+      window.location.reload();
     });
   };
-
   setColor(status) {
     if (status === "Còn Trống") {
       return "#99FF99";
@@ -96,7 +96,9 @@ export default class RoomList extends Component {
       roomId: this.state.id,
       role: "user",
     };
-    instance.post(`api/Account/Register`, data);
+    instance.post(`api/Account/Register`, data).then((res) => {
+      window.location.reload();
+    });
   };
 
   setDisabledButton(number) {
@@ -155,32 +157,13 @@ export default class RoomList extends Component {
 
   setRedirectRoomDetail = (id, e) => {
     sessionStorage.setItem("roomId", id);
-    this.setState({
-      redirectRoomDetail: true,
-    });
+    window.location.href = "/manage/room/details";
   };
 
   setRedirectEditRoom = (id, e) => {
     sessionStorage.setItem("roomId", id);
-    this.setState({
-      redirectEditRoom: true,
-    });
+    window.location.href = "/manage/room/edit";
   };
-
-  renderRedirectRoomDetail = (e) => {
-    if (this.state.redirectRoomDetail === true) {
-      return <Redirect to="/manage/room/details" />;
-    }
-    return <Redirect to="/manage/rooms" />;
-  };
-
-  renderRedirectEditRoom = (e) => {
-    if (this.state.redirectEditRoom === true) {
-      return <Redirect to="/manage/room/edit" />;
-    }
-    return <Redirect to="/manage/rooms" />;
-  };
-
   handleShowDelete = (id) => {
     this.setState({
       id: id,
@@ -230,7 +213,7 @@ export default class RoomList extends Component {
               exit={false}
             >
               <div>
-                <Table id="example" responsive>
+                <Table id="roomList" responsive>
                   <thead style={{ color: "blue" }}>
                     <tr>
                       <td className="text-center">Phòng</td>
@@ -272,7 +255,6 @@ export default class RoomList extends Component {
                               </Button>
                             </Col>
                             <Col>
-                              {this.renderRedirectRoomDetail()}
                               <Button
                                 style={{ border: "none" }}
                                 onClick={(e) =>
@@ -284,7 +266,6 @@ export default class RoomList extends Component {
                               </Button>
                             </Col>
                             <Col>
-                              {this.renderRedirectEditRoom()}
                               <Button
                                 style={{ border: "none" }}
                                 onClick={(e) =>
@@ -317,6 +298,7 @@ export default class RoomList extends Component {
                   <Button
                     onClick={(e) => this.handleShowAdd()}
                     variant="outline-primary"
+                    style={{ border: "none" }}
                   >
                     <FaPlus /> Thêm phòng
                   </Button>
@@ -330,15 +312,9 @@ export default class RoomList extends Component {
                   <Modal.Header closeButton>
                     <Modal.Title>Xác nhận</Modal.Title>
                   </Modal.Header>
-                  <Modal.Body>
-                    Bạn có muốn xóa phòng {this.state.id} khỏi danh sách phòng
-                    không?
-                  </Modal.Body>
+                  <Modal.Body>Bạn có muốn xóa phòng đã chọn không?</Modal.Body>
                   <Modal.Footer>
-                    <Button
-                      variant="danger"
-                      onClick={(e) => this.deleteRoom(this.state.id)}
-                    >
+                    <Button variant="danger" onClick={(e) => this.deleteRoom()}>
                       Có
                     </Button>
                     <Button
@@ -393,7 +369,6 @@ export default class RoomList extends Component {
                           value={this.state.description}
                           onChange={this.onDescriptionChange}
                         />
-                        .
                       </FormGroup>
                     </Form>
                   </Modal.Body>
@@ -440,7 +415,7 @@ export default class RoomList extends Component {
                       <FormGroup>
                         <Label for="password"></Label>
                         <Input
-                          type="text"
+                          type="password"
                           name="password"
                           placeholder="Nhập mật khẩu"
                           value={this.state.password}

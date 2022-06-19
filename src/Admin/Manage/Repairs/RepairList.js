@@ -27,6 +27,9 @@ export default class RepairList extends Component {
     }
 
     componentDidMount() {
+        if (sessionStorage.getItem("role") !== "admin") {
+            window.location.href = "/";
+          }
         instance.get(`api/RequestRepair`)
             .then(res => {
                 const repairs = res.data;

@@ -30,6 +30,7 @@ export default class Guests extends Component {
     guests: [],
     showEdit: false,
     showDelete: false,
+    roomName: "",
 
     id: 0,
     name: "",
@@ -54,6 +55,13 @@ export default class Guests extends Component {
         this.setState({ guests });
       })
       .catch((error) => console.log(error));
+    instance
+      .get(`api/Room/GetRoomById/${sessionStorage.getItem("roomId")}`)
+      .then((res) => {
+        const room = res.data;
+        const roomName = room.name;
+        this.setState({ roomName });
+      });
     $(document).ready(function () {
       setTimeout(function () {
         $("#example").dataTable({
@@ -88,7 +96,7 @@ export default class Guests extends Component {
         const job = guest.job;
         const company = guest.company;
         const startDate = moment(guest.startDate).format("YYYY-MM-DD");
-        const endDate = moment(guest.endDate).format("YYYY-MM-DD");
+        const endDate = moment(new Date()).format("YYYY-MM-DD");
         const room = guest.room;
         const nationality = guest.nationality;
         this.setState({
@@ -374,7 +382,7 @@ export default class Guests extends Component {
                           name="room"
                           type="text"
                           placeholder={
-                            this.state.room == -1 ? "Không" : this.state.room
+                            this.state.room === -1 ? "Không" : this.state.roomName
                           }
                           disabled
                         />

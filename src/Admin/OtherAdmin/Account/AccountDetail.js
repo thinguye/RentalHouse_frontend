@@ -16,6 +16,11 @@ export default class AccountDetail extends Component {
         alertback: "",
     }
 
+    componentDidMount(){
+        if (sessionStorage.getItem("role") !== "admin") {
+            window.location.href = "/";
+          }
+    }
     onPasswordChange = e => {
         this.setState({
             password: e.target.value
@@ -104,7 +109,7 @@ export default class AccountDetail extends Component {
                                         id="confirmpass"
                                         placeholder="Xác nhận mật khẩu mới"
                                         required
-                                        value={this.state.confirmPass} />.
+                                        value={this.state.confirmPass} />
                                 </FormGroup>
                                 <Button onClick={(e) => this.handleSubmit()}>Đổi mật khẩu</Button>
                             </Form>

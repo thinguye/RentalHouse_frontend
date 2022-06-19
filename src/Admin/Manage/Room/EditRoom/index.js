@@ -31,8 +31,7 @@ export default class EditRoom extends React.Component {
             <Fragment>
                 <PageTitle
                     heading="CHỈNH SỬA"
-                    subheading="Multiple styles, actions and effects are available for the Archited Framework dropdown buttons."
-                    icon="pe-7s-pencil icon-gradient bg-sunny-morning"
+                    icon="pe-7s-home icon-gradient bg-sunny-morning"
                 />
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()} />
             </Fragment>

@@ -29,7 +29,7 @@ export default class Account extends React.Component {
             <Fragment>
                 <PageTitle
                     heading="TÀI KHOẢN"
-                    icon="pe-7s-home icon-gradient bg-warm-flame"
+                    icon="pe-7s-user icon-gradient bg-love-kiss"
                 />
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()}/>
             </Fragment>

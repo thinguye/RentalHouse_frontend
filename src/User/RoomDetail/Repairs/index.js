@@ -32,9 +32,8 @@ export default class Repairs extends React.Component {
         return (
             <Fragment>
                 <PageTitle
-                    heading="THÔNG TIN PHÒNG"
-                    subheading="Multiple styles, actions and effects are available for the Archited Framework dropdown buttons."
-                    icon="pe-7s-pencil icon-gradient bg-sunny-morning"
+                    heading="LỊCH SỬ CHỈNH SỬA"
+                    icon="pe-7s-tools icon-gradient bg-warm-flame"
                 />
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()} />
             </Fragment>

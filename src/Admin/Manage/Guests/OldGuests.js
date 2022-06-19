@@ -6,6 +6,12 @@ import { Row, Col } from "reactstrap";
 import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 import { Redirect } from "react-router-dom";
 import moment from "moment";
+import "jquery/dist/jquery.min.js";
+
+//Datatable Modules
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.css";
+import $ from "jquery";
 
 export default class OldGuests extends Component {
   state = {
@@ -24,6 +30,32 @@ export default class OldGuests extends Component {
         this.setState({ guests });
       })
       .catch((error) => console.log(error));
+      $(document).ready(function () {
+        setTimeout(function () {
+          $("#oldGuests").dataTable({
+            language: {
+              search: "Tìm kiếm:",
+              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ khách",
+              infoEmpty: "",
+              emptyTable: "Chưa có dữ liệu để hiển thị",
+              lengthMenu: "Hiển thị _MENU_ khách",
+              paginate: {
+                next: "Trang cuối",
+                previous: "Trang đầu",
+              },
+            },
+            columns: [
+              null,
+              { orderable: false },
+              { orderable: false },
+              { orderable: false },
+              { orderable: false },
+              { orderable: false },
+              { orderable: false },
+            ],
+          });
+        }, 100);
+      });
   }
 
   handleShowDelete = (id, name, e) => {
@@ -79,7 +111,7 @@ export default class OldGuests extends Component {
             exit={false}
           >
             <div>
-              <Table>
+              <Table id="oldGuests">
                 <thead style={{ color: "blue" }}>
                   <tr>
                     <td>Họ và tên</td>

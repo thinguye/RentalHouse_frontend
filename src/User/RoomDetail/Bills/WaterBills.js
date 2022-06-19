@@ -43,7 +43,7 @@ export default class WaterBills extends Component {
             },
           },
         });
-      }, 1000);
+      }, 100);
     });
   }
 
