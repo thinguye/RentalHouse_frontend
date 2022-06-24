@@ -27,7 +27,12 @@ function getTabs() {
 export default class EditGuest extends React.Component {
 
     render() {
-
+        if (sessionStorage.getItem("role") !== "admin") {
+            if(sessionStorage.getItem("role") === "user") {
+              window.location.href ="/room";
+            }
+            window.location.href = "/";
+          }
         return (
             <Fragment>
                 <Tabs tabsWrapperClass="body-tabs body-tabs-layout" transform={false} showInkBar={true} items={getTabs()} />

@@ -34,7 +34,7 @@ class BookingList extends Component {
     showAdd: false,
     showUpdate: false,
     showDelete: false,
-    disableButton: true,
+    disableButton: "disabled",
     name: "",
     phone: "",
     note: "",
@@ -53,39 +53,39 @@ class BookingList extends Component {
         this.setState({ bookings });
       })
       .catch((error) => console.log(error));
-      $(document).ready(function () {
-        setTimeout(function () {
-          $("#bookingList").dataTable({
-            language: {
-              search: "Tìm kiếm:",
-              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ lượt",
-              infoEmpty: "",
-              emptyTable: "Chưa có dữ liệu để hiển thị",
-              lengthMenu: "Hiển thị _MENU_ lượt",
-              paginate: {
-                next: "Trang cuối",
-                previous: "Trang đầu",
-              },
+    $(document).ready(function () {
+      setTimeout(function () {
+        $("#bookingList").dataTable({
+          language: {
+            search: "Tìm kiếm:",
+            info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ lượt",
+            infoEmpty: "",
+            emptyTable: "Chưa có dữ liệu để hiển thị",
+            lengthMenu: "Hiển thị _MENU_ lượt",
+            paginate: {
+              next: "Trang cuối",
+              previous: "Trang đầu",
             },
-            columns: [
-              null,
-              { orderable: false },
-              { orderable: false },
-              { orderable: false },
-              null,
-              { orderable: false },
-              { orderable: false },
-            ],
-          });
-        }, 100);
-      });
+          },
+          columns: [
+            null,
+            { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            null,
+            { orderable: false },
+            { orderable: false },
+          ],
+        });
+      }, 100);
+    });
     // const roomName = Array(bookings.length).fill("");
     // for (let i = 0; i < bookings.length; i++) {
     //   instance.get(`api/Room/GetRoomById/${bookings[i].room}`).then((rs) => {
     //     const room = rs.data;
     //     const name = room.name;
     //     roomName.push(name);
-        
+
     //   });
     // }
     // this.setState({roomName})
@@ -165,6 +165,7 @@ class BookingList extends Component {
 
   onChangeStatus = (e) => {
     this.setState({
+      disableButton: "",
       status: true,
     });
   };
@@ -209,7 +210,7 @@ class BookingList extends Component {
       showDelete: false,
     });
   };
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const data = {
       name: this.state.name,
       phone: this.state.phone,
@@ -262,7 +263,7 @@ class BookingList extends Component {
                         <td className="text-center">{booking.phone}</td>
                         <td className="text-center">
                           {/* {this.state.roomName[index++]} */}
-                          {booking.room}
+                          {booking.roomName}
                         </td>
                         <td className="text-center">{booking.note}</td>
                         <td className="text-center">
@@ -285,6 +286,7 @@ class BookingList extends Component {
                           <Row style={{ float: "right" }}>
                             <Col>
                               <Button
+                                className={this.state.disableButton}
                                 style={{ border: "none" }}
                                 onClick={(e) =>
                                   this.handleShowUpdate(booking.id)

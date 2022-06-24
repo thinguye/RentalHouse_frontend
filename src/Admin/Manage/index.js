@@ -9,9 +9,7 @@ import Rooms from './Rooms';
 
 // DROPDOWNS
 import Room from './Room/Information';
-import AddGuest from './Room/Add/Guest';
 import EditRoom from './Room/EditRoom';
-import AddBill from './Room/Add/Bill';
 
 import Guests from './Guests';
 import EditGuest from './EditGuestProfile';
@@ -50,13 +48,7 @@ const Manage = () => (
 
                     <Route path={`/manage/room/edit`} component={EditRoom} />
 
-                    <Route path={`/manage/room/add/bill`} component={AddBill} />
-
-                    <Route path={`/manage/room/add/guest`} component={AddGuest} />
-
                     {/* Guests */}
-
-
 
                     <Route path={`/manage/guest`} component={EditGuest} />
 

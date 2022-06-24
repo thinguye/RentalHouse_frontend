@@ -48,7 +48,7 @@ export default class Login extends Component {
         })
         .then((rs) => {
           console.log(rs);
-          if (rs.data!==null) {
+          if (rs.data !== null) {
             sessionStorage.setItem("token", rs.data.access_token);
             instance.defaults.headers.Authorization =
               "Bearer " + rs.data.access_token;
@@ -72,6 +72,12 @@ export default class Login extends Component {
             });
           }
         })
+        .catch((err) => {
+          this.setState({
+            show: true,
+            contentAlert: "Sai tên đăng nhập hoặc mật khẩu",
+          });
+        });
     } else {
       this.setState({
         show: true,
@@ -84,7 +90,7 @@ export default class Login extends Component {
     if (this.state.redirect === true) {
       if (this.state.role === "admin") {
         sessionStorage.setItem("role", "admin");
-        return <Redirect to="/dashboards" />;
+        return <Redirect to="/dashboard" />;
       } else if (this.state.role === "user") {
         sessionStorage.setItem("role", "user");
         return <Redirect to="/room" />;

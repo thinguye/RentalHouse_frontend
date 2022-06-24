@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Button, Table, Modal } from "react-bootstrap";
+import { Button, Table, Modal, Form } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import instance from "../../../../api/axiosClient";
-import { Row, Col, Input, Label, Form, FormGroup } from "reactstrap";
+import { Row, Col, Input, Label, FormGroup } from "reactstrap";
 import { FaTrashAlt, FaPencilAlt, FaPlus } from "react-icons/fa";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -18,6 +18,7 @@ import $ from "jquery";
 class Guests extends Component {
   state = {
     idRoom: sessionStorage.getItem("roomId"),
+    allGuests: [],
     guests: [],
     redirectEditGuest: false,
     redirectAddGuest: false,
@@ -25,6 +26,8 @@ class Guests extends Component {
     name: "",
     id: "",
     showAdd: false,
+    disableButton: "disabled",
+
     id_Number: "",
     doB: "",
     hometown: "",
@@ -124,10 +127,19 @@ class Guests extends Component {
       .catch((err) => console.log(err));
   };
 
+  handleChange = () => {
+    instance
+      .put(`api/Customer/${this.state.id}?roomId=${this.state.idRoom}`)
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
     instance
       .get(`api/Customer/GetByRoom/${this.state.idRoom}`)
       .then((res) => {
@@ -135,6 +147,12 @@ class Guests extends Component {
         this.setState({ guests });
       })
       .catch((error) => console.log(error));
+    instance.get(`api/Customer/old+customers`).then((res) => {
+      const allGuests = res.data;
+      this.setState({
+        allGuests,
+      });
+    });
     $(document).ready(function () {
       setTimeout(function () {
         $("#guestList").dataTable({
@@ -192,6 +210,13 @@ class Guests extends Component {
     });
   };
 
+  onGuestChange = (e) => {
+    this.setState({
+      id: e.target.value,
+      disableButton: "",
+    });
+  };
+
   handleCloseAdd = () => {
     this.setState({
       showAdd: false,
@@ -199,6 +224,12 @@ class Guests extends Component {
   };
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <>
         <Fragment>
@@ -237,12 +268,14 @@ class Guests extends Component {
                                   this.setRedirectEditGuest(guest.id)
                                 }
                                 variant="outline-primary"
+                                style={{border:"none"}}
                               >
                                 <FaPencilAlt />
                               </Button>
                             </Col>
                             <Col>
                               <Button
+                              style={{border:"none"}}
                                 variant="outline-danger"
                                 onClick={(e) =>
                                   this.handleShowDelete(guest.id, guest.name)
@@ -256,21 +289,28 @@ class Guests extends Component {
                       </tr>
                     ))}
                   </tbody>
-                  <tfoot style={{ borderColor: "transparent" }}>
-                    <tr>
-                      <td colSpan={5}>
-                        <div className="text-center">
-                          <Button
-                            onClick={(e) => this.handleShowAdd()}
-                            variant="outline-primary"
-                          >
-                            <FaPlus /> Thêm khách trọ
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tfoot>
                 </Table>
+                <Row md={3} sm={1} style={{marginTop:"1rem"}}>
+                  <Col>
+                    <Form.Control as="select" onChange={this.onGuestChange}>
+                    <option value={""}>---</option>
+                      {this.state.allGuests.map((guest) => (
+                        <option value={guest.id}>{guest.name}</option>
+                      ))}
+                    </Form.Control>
+                  </Col>
+                  <Col>
+                  <Button onClick={(e)=>this.handleChange()} className={this.state.disableButton}>
+                      Thêm khách có sẵn
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button
+                      onClick={(e) => this.handleShowAdd()}
+                      variant="outline-primary"
+                    ><FaPlus /> Thêm khách mới</Button>
+                  </Col>
+                </Row>
                 <Modal
                   show={this.state.showAdd}
                   onHide={(e) => this.handleCloseAdd()}
@@ -412,7 +452,13 @@ class Guests extends Component {
                       </FormGroup>
                     </Form>
                   </Modal.Body>
-                  <Modal.Footer style={{ display: "block", border:"none", backgroundColor:"transparent" }}>
+                  <Modal.Footer
+                    style={{
+                      display: "block",
+                      border: "none",
+                      backgroundColor: "transparent",
+                    }}
+                  >
                     <div className="text-center">
                       <Button
                         style={{
@@ -426,7 +472,7 @@ class Guests extends Component {
                         Thêm
                       </Button>
                       <Button
-                        style={{ marginLeft: "40px", border:"none" }}
+                        style={{ marginLeft: "40px", border: "none" }}
                         variant="outline-danger"
                         onClick={(e) => this.handleCloseAdd()}
                       >
@@ -435,7 +481,6 @@ class Guests extends Component {
                     </div>
                   </Modal.Footer>
                 </Modal>
-
                 <Modal
                   show={this.state.showDelete}
                   size="lg"
@@ -478,4 +523,4 @@ class Guests extends Component {
   }
 }
 
-export default withRouter(Guests);
+export default Guests;

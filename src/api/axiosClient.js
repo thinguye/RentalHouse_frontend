@@ -1,18 +1,5 @@
 import axios from 'axios';
-export const API_BASE_URL = 'https://localhost:7176/api';
 
-// function getLocalToken() {
-//     const token = window.localStorage.getItem('token')
-//     console.log('token >>>', token);
-//     return token
-// }
-
-// function getLocalRefreshToken() {
-//     const token = window.localStorage.getItem('refreshToken')
-//     return token
-// }
-
-//cau hinh axios
 
 const instance = axios.create({
     baseURL: 'https://localhost:7176/',
@@ -28,6 +15,14 @@ const instance = axios.create({
 instance.setToken = (token) => {
     instance.defaults.headers['Authorization'] = "Bearer " + token
 }
+instance.interceptors.request.use(function (config) {
+    const token =  sessionStorage.getItem("token");
+    config.headers.Authorization = "Bearer "+ token;
+
+    return config;
+});
+
+export default instance
 
 // function refreshToken () {
 //     return instance.post('/token',{
@@ -56,12 +51,7 @@ instance.setToken = (token) => {
 
 // getToken();
 
-instance.interceptors.request.use(function (config) {
-    const token =  sessionStorage.getItem("token");
-    config.headers.Authorization = "Bearer "+ token;
 
-    return config;
-});
 
 // // response parse
 // instance.interceptors.response.use((response) => {
@@ -95,6 +85,19 @@ instance.interceptors.request.use(function (config) {
 
 //click login de lay token va refreshtoke
 
+//export const API_BASE_URL = 'https://localhost:7176/api';
 
-export default instance
+// function getLocalToken() {
+//     const token = window.localStorage.getItem('token')
+//     console.log('token >>>', token);
+//     return token
+// }
+
+// function getLocalRefreshToken() {
+//     const token = window.localStorage.getItem('refreshToken')
+//     return token
+// }
+
+//cau hinh axios
+
 

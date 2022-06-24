@@ -86,19 +86,16 @@ export default class OldGuests extends Component {
 
   setRedirect = (id, e) => {
     sessionStorage.setItem("guestId", id);
-    this.setState({
-      redirect: true,
-    });
-  };
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to="/manage/guest" />;
-    }
-    return <Redirect to="/manage/guests" />;
+    window.location.href="/manage/guest";
   };
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <Fragment>
         <TransitionGroup>
@@ -114,6 +111,7 @@ export default class OldGuests extends Component {
               <Table id="oldGuests">
                 <thead style={{ color: "blue" }}>
                   <tr>
+                  <td>#</td>
                     <td>Họ và tên</td>
                     <td>Số điện thoại</td>
                     <td>Ngày sinh</td>
@@ -126,6 +124,7 @@ export default class OldGuests extends Component {
                 <tbody>
                   {this.state.guests.map((guest) => (
                     <tr v-for="item in tableItems" key={guest.id}>
+                    <td className="text-center">{guest.id}</td>
                       <td>{guest.name}</td>
                       <td>{guest.phone}</td>
                       <td>{moment(guest.doB).format("DD-MM-YYYY")}</td>
@@ -135,7 +134,6 @@ export default class OldGuests extends Component {
                       <td>
                         <Row>
                           <Col>
-                            {this.renderRedirect()}
                             <Button
                               style={{ border: "none" }}
                               variant="outline-primary"

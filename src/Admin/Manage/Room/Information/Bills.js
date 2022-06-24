@@ -15,7 +15,7 @@ import $ from "jquery";
 
 export default class Bills extends Component {
   state = {
-    id:0,
+    id: 0,
     bills: [],
     roomName: "",
     room: sessionStorage.getItem("roomId"),
@@ -30,9 +30,6 @@ export default class Bills extends Component {
   };
 
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/home";
-    }
     const id = this.state.room;
     instance
       .get(`api/Bill/GetByRoom/${id}`)
@@ -41,7 +38,7 @@ export default class Bills extends Component {
         this.setState({ bills });
       })
       .catch((error) => console.log(error));
-    
+
     instance
       .get(`api/Room/GetRoomById/${id}`)
       .then((res) => {
@@ -50,33 +47,33 @@ export default class Bills extends Component {
         this.setState({ roomName });
       })
       .catch((error) => console.log(error));
-      $(document).ready(function () {
-        setTimeout(function () {
-          $("#bills").dataTable({
-            language: {
-              search: "Tìm kiếm:",
-              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
-              infoEmpty: "",
-              emptyTable: "Chưa có dữ liệu để hiển thị",
-              lengthMenu: "Hiển thị _MENU_ hóa đơn",
-              paginate: {
-                next: "Trang cuối",
-                previous: "Trang đầu",
-              },
+    $(document).ready(function () {
+      setTimeout(function () {
+        $("#bills").dataTable({
+          language: {
+            search: "Tìm kiếm:",
+            info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
+            infoEmpty: "",
+            emptyTable: "Chưa có dữ liệu để hiển thị",
+            lengthMenu: "Hiển thị _MENU_ hóa đơn",
+            paginate: {
+              next: "Trang cuối",
+              previous: "Trang đầu",
             },
-            columns:[
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:false},
-              {orderable:false},
-            ]
-          });
-        }, 100);
-      });
+          },
+          columns: [
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: false },
+            { orderable: false },
+          ],
+        });
+      }, 100);
+    });
   }
 
   handleShowAdd = () => {
@@ -145,7 +142,10 @@ export default class Bills extends Component {
   };
 
   handleSubmit = (e) => {
-    if (this.state.electric_num < this.state.oldElectricNum) {
+    if (
+      this.state.electric_num < this.state.oldElectricNum ||
+      this.state.water_num < this.state.oldWaterNum
+    ) {
       this.setState({
         showSubmit: true,
         contentSubmit: "Số mới không thể nhỏ hơn số cũ. Vui lòng kiểm tra lại!",
@@ -163,9 +163,8 @@ export default class Bills extends Component {
           if (res) {
             this.setState({
               showAdd: false,
-              showSubmit: true,
-              contentSubmit: "Bạn đã thêm hóa đơn thành công!",
             });
+            window.location.reload();
           } else {
             this.setState({
               showSubmit: true,
@@ -201,6 +200,12 @@ export default class Bills extends Component {
   }
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if (sessionStorage.getItem("role") === "user") {
+        window.location.href = "/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <>
         <Fragment>
@@ -289,7 +294,7 @@ export default class Bills extends Component {
                 </Table>
                 <div className="text-center">
                   <Button
-                  style={{border:"none", marginTop:"1rem"}}
+                    style={{ border: "none", marginTop: "1rem" }}
                     variant="outline-primary"
                     onClick={(e) => this.handleShowAdd()}
                   >
@@ -357,7 +362,7 @@ export default class Bills extends Component {
                     <div className="text-center">
                       <Button
                         style={{
-                          border:"none",
+                          border: "none",
                           marginRight: "40px",
                         }}
                         onClick={(e) => this.handleSubmit()}
@@ -367,7 +372,7 @@ export default class Bills extends Component {
                         Thêm
                       </Button>
                       <Button
-                        style={{ marginLeft: "40px", border:'none' }}
+                        style={{ marginLeft: "40px", border: "none" }}
                         variant="outline-danger"
                         onClick={(e) => this.handleCloseAdd()}
                       >

@@ -43,7 +43,7 @@ function App() {
                     </h6>
                 </div>
             </div>}>
-                <Route path="/dashboards" component={Dashboards} />
+                <Route path="/dashboard" component={Dashboards} />
             </Suspense>
 
             <Suspense fallback={<div className="loader-container">

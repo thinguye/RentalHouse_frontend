@@ -15,7 +15,7 @@ import $ from "jquery";
 
 export default class BillsTotal extends Component {
   state = {
-    id:0,
+    id: 0,
     bills: [],
     roomName: "",
     room: sessionStorage.getItem("roomId"),
@@ -41,7 +41,7 @@ export default class BillsTotal extends Component {
         this.setState({ bills });
       })
       .catch((error) => console.log(error));
-    
+
     instance
       .get(`api/Room/GetRoomById/${id}`)
       .then((res) => {
@@ -50,32 +50,33 @@ export default class BillsTotal extends Component {
         this.setState({ roomName });
       })
       .catch((error) => console.log(error));
-      $(document).ready(function () {
-        setTimeout(function () {
-          $("#bills").dataTable({
-            language: {
-              search: "Tìm kiếm:",
-              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
-              infoEmpty: "",
-              emptyTable: "Chưa có dữ liệu để hiển thị",
-              lengthMenu: "Hiển thị _MENU_ hóa đơn",
-              paginate: {
-                next: "Trang cuối",
-                previous: "Trang đầu",
-              },
+    $(document).ready(function () {
+      setTimeout(function () {
+        $("#bills").dataTable({
+          language: {
+            search: "Tìm kiếm:",
+            info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
+            infoEmpty: "",
+            emptyTable: "Chưa có dữ liệu để hiển thị",
+            lengthMenu: "Hiển thị _MENU_ hóa đơn",
+            paginate: {
+              next: "Trang cuối",
+              previous: "Trang đầu",
             },
-            columns:[
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:true},
-              {orderable:false},
-            ]
-          });
-        }, 100);
-      });
+          },
+          columns: [
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: true },
+            { orderable: false },
+          ],
+        });
+      }, 100);
+    });
   }
 
   handleShowAdd = () => {
@@ -216,6 +217,7 @@ export default class BillsTotal extends Component {
                 <Table id="bills" responsive>
                   <thead style={{ color: "blue" }}>
                     <tr>
+                      <td className="text-center">Mã hóa đơn</td>
                       <td className="text-center">Ngày</td>
                       <td className="text-center">Tiền phòng</td>
                       <td className="text-center">Tiền điện</td>
@@ -232,6 +234,7 @@ export default class BillsTotal extends Component {
                         v-for="item in tableItems"
                         key={bill.id}
                       >
+                      <td className="text-center">{bill.id}</td>
                         <td className="text-center">
                           {moment(bill.time).format("DD-MM-YYYY")}
                         </td>
@@ -274,7 +277,7 @@ export default class BillsTotal extends Component {
                 </Table>
                 <div className="text-center">
                   <Button
-                  style={{border:"none", marginTop:"1rem"}}
+                    style={{ border: "none", marginTop: "1rem" }}
                     variant="outline-primary"
                     onClick={(e) => this.handleShowAdd()}
                   >
@@ -331,7 +334,7 @@ export default class BillsTotal extends Component {
                     <div className="text-center">
                       <Button
                         style={{
-                          border:"none",
+                          border: "none",
                           marginRight: "40px",
                         }}
                         onClick={(e) => this.handleSubmit()}
@@ -341,7 +344,7 @@ export default class BillsTotal extends Component {
                         Thêm
                       </Button>
                       <Button
-                        style={{ marginLeft: "40px", border:'none' }}
+                        style={{ marginLeft: "40px", border: "none" }}
                         variant="outline-danger"
                         onClick={(e) => this.handleCloseAdd()}
                       >

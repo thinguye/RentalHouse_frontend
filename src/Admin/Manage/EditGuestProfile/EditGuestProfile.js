@@ -27,9 +27,6 @@ class EditGuestProfile extends Component {
   };
 
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
     instance
       .get(`api/Customer/${this.state.id}`)
 
@@ -46,6 +43,7 @@ class EditGuestProfile extends Component {
         const startDate = moment(guest.startDate).format("YYYY-MM-DD");
         const endDate = moment(guest.endDate).format("YYYY-MM-DD");
         const room = guest.room;
+        const roomName = guest.roomName;
         const nationality = guest.nationality;
         this.setState({
           name,
@@ -59,12 +57,8 @@ class EditGuestProfile extends Component {
           startDate,
           endDate,
           room,
+          roomName,
           nationality,
-        });
-        instance.get(`api/Room/GetRoomById/${room}`).then((res) => {
-          const roomUser = res.data;
-          const roomName = roomUser.name;
-          this.setState({ roomName });
         });
       })
       .catch((error) => console.log(error));
@@ -152,6 +146,7 @@ class EditGuestProfile extends Component {
       company: this.state.company,
       phone: this.state.phone,
       room: this.state.room,
+      roomName:this.state.roomName,
       startDate: this.state.startDate,
       endDate: this.state.room === -1 ? this.state.endDate : new Date(),
     };
@@ -168,6 +163,12 @@ class EditGuestProfile extends Component {
   };
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <Fragment>
         <TransitionGroup>

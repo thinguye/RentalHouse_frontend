@@ -46,6 +46,12 @@ export default class Electrics extends Component {
   }
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <>
         <Fragment>

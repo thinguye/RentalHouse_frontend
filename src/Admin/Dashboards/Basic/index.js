@@ -88,10 +88,12 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{Intl.NumberFormat("vi-VN", {
+      >
+        {Intl.NumberFormat("vi-VN", {
           style: "currency",
           currency: "VND",
-        }).format(value)}</text>
+        }).format(value)}
+      </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -104,7 +106,6 @@ const renderActiveShape = (props) => {
     </g>
   );
 };
-
 
 export default class AnalyticsDashboard1 extends Component {
   constructor() {
@@ -127,9 +128,6 @@ export default class AnalyticsDashboard1 extends Component {
   }
 
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
     instance.get(`api/Bill/Profit?year=${this.state.id}`).then((res) => {
       if (res) {
         const tempData = res.data;
@@ -142,7 +140,6 @@ export default class AnalyticsDashboard1 extends Component {
         var sumElectric = 0;
         var sumWater = 0;
         for (let i = 1; i < tempData.length - 3; i += 3) {
-          if (tempData[i] !== 0) {
             data[(i - 1) / 3] = {
               name: (i - 1) / 3 + 1,
               "Doanh thu": tempData[i],
@@ -151,9 +148,6 @@ export default class AnalyticsDashboard1 extends Component {
             };
             sumElectric += tempData[i + 1];
             sumWater += tempData[i + 2];
-          } else {
-            break;
-          }
         }
         const data2 = [
           {
@@ -163,6 +157,7 @@ export default class AnalyticsDashboard1 extends Component {
           { name: "Điện", value: sumElectric },
           { name: "Nước", value: sumWater },
         ];
+        console.log(sumElectric);
         this.setState({ data, data2, id, yearlyProfit });
       }
     });
@@ -192,18 +187,14 @@ export default class AnalyticsDashboard1 extends Component {
         var sumElectric = 0;
         var sumWater = 0;
         for (let i = 1; i < tempData.length - 3; i += 3) {
-          if (tempData[i] !== 0) {
-            data[(i - 1) / 3] = {
-              name: (i - 1) / 3 + 1,
-              "Doanh thu": tempData[i],
-              Điện: tempData[i + 1],
-              Nước: tempData[i + 2],
-            };
-            sumElectric += tempData[i + 1];
-            sumWater += tempData[i + 2];
-          } else {
-            break;
-          }
+          data[(i - 1) / 3] = {
+            name: (i - 1) / 3 + 1,
+            "Doanh thu": tempData[i],
+            Điện: tempData[i + 1],
+            Nước: tempData[i + 2],
+          };
+          sumElectric += tempData[i + 1];
+          sumWater += tempData[i + 2];
         }
         const data2 = [
           {
@@ -224,8 +215,14 @@ export default class AnalyticsDashboard1 extends Component {
     });
   };
 
-  
+
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <Fragment>
         <TransitionGroup>
@@ -281,11 +278,11 @@ export default class AnalyticsDashboard1 extends Component {
                                   margin={{
                                     top: 5,
                                     right: 10,
-                                    left: 10,
+                                    left: 20,
                                     bottom: 5,
                                   }}
                                 >
-                                  <Tooltip />
+                                  <Tooltip/>
                                   <XAxis dataKey="name" />
                                   <YAxis />
                                   <CartesianGrid

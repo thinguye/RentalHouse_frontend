@@ -55,13 +55,6 @@ export default class Guests extends Component {
         this.setState({ guests });
       })
       .catch((error) => console.log(error));
-    instance
-      .get(`api/Room/GetRoomById/${sessionStorage.getItem("roomId")}`)
-      .then((res) => {
-        const room = res.data;
-        const roomName = room.name;
-        this.setState({ roomName });
-      });
     $(document).ready(function () {
       setTimeout(function () {
         $("#example").dataTable({
@@ -98,6 +91,7 @@ export default class Guests extends Component {
         const startDate = moment(guest.startDate).format("YYYY-MM-DD");
         const endDate = moment(new Date()).format("YYYY-MM-DD");
         const room = guest.room;
+        const roomName = guest.roomName;
         const nationality = guest.nationality;
         this.setState({
           id,
@@ -112,6 +106,7 @@ export default class Guests extends Component {
           startDate,
           endDate,
           room,
+          roomName,
           nationality,
         });
       })
@@ -140,6 +135,7 @@ export default class Guests extends Component {
       company: this.state.company,
       phone: this.state.phone,
       room: this.state.room,
+      roomName: this.state.roomName,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
     };
@@ -151,6 +147,7 @@ export default class Guests extends Component {
           this.setState({
             showEdit: false,
           });
+          window.location.reload();
         }
       })
       .catch((err) => console.log(err));
@@ -381,8 +378,8 @@ export default class Guests extends Component {
                         <Input
                           name="room"
                           type="text"
-                          placeholder={
-                            this.state.room === -1 ? "Không" : this.state.roomName
+                          value={
+                            this.state.roomName
                           }
                           disabled
                         />

@@ -2,7 +2,7 @@ export const MainNav = [
     {
         icon: 'pe-7s-rocket',
         label: 'Trang chủ',
-        to: '/dashboards',
+        to: '/dashboard',
     },
 ];
 export const ComponentsNav = [

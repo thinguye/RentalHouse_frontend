@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-
-import { Row, Col } from "reactstrap";
-import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 import instance from "../../../../api/axiosClient";
 import "jquery/dist/jquery.min.js";
 
@@ -30,23 +27,29 @@ export default class Waters extends Component {
     $(document).ready(function () {
       setTimeout(function () {
         $("#waterBills").dataTable({
-            language: {
-              search: "Tìm kiếm:",
-              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
-              infoEmpty: "",
-              emptyTable: "Chưa có dữ liệu để hiển thị",
-              lengthMenu: "Hiển thị _MENU_ hóa đơn",
-              paginate: {
-                next: "Trang cuối",
-                previous: "Trang đầu",
-              },
-            }
+          language: {
+            search: "Tìm kiếm:",
+            info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ hóa đơn",
+            infoEmpty: "",
+            emptyTable: "Chưa có dữ liệu để hiển thị",
+            lengthMenu: "Hiển thị _MENU_ hóa đơn",
+            paginate: {
+              next: "Trang cuối",
+              previous: "Trang đầu",
+            },
+          },
         });
       }, 100);
     });
   }
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if (sessionStorage.getItem("role") === "user") {
+        window.location.href = "/room";
+      }
+      window.location.href = "/";
+    }
     return (
       <>
         <Fragment>

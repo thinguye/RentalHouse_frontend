@@ -3,7 +3,6 @@ import { Button, Table, Modal } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Row, Col, Input, Label, Form, FormGroup } from "reactstrap";
 import { FaTrashAlt, FaPencilAlt, FaPlus, FaEye } from "react-icons/fa";
-import { Redirect } from "react-router-dom";
 import instance from "../../../api/axiosClient";
 
 import "jquery/dist/jquery.min.js";
@@ -34,9 +33,6 @@ export default class RoomList extends Component {
     date: new Date(),
   };
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
     instance
       .get("api/Room")
       .then((res) => {
@@ -200,6 +196,13 @@ export default class RoomList extends Component {
   };
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if (sessionStorage.getItem("role") === "user") {
+        window.location.href = "/room";
+      }
+      window.location.href = "/";
+    }
+    var index = 1;
     return (
       <>
         <Fragment>
@@ -216,6 +219,7 @@ export default class RoomList extends Component {
                 <Table id="roomList" responsive>
                   <thead style={{ color: "blue" }}>
                     <tr>
+                      <td className="text-center">#</td>
                       <td className="text-center">Phòng</td>
                       <td className="text-center">Số khách trọ</td>
                       <td className="text-center">Giá tiền</td>
@@ -231,6 +235,7 @@ export default class RoomList extends Component {
                         v-for="item in tableItems"
                         key={room.id}
                       >
+                        <td>{index++}</td>
                         <td className="text-center">{room.name}</td>
                         <td className="text-center">{room.number_Of_People}</td>
                         <td className="text-center">

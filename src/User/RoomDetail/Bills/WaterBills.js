@@ -67,6 +67,7 @@ export default class WaterBills extends Component {
                     <td>Ngày</td>
                     <td>Số cũ</td>
                     <td>Số mới</td>
+                    <td>Lượng nước tiêu thụ</td>
                     <td>Giá nước</td>
                     <td>Tổng tiền</td>
                   </tr>
@@ -74,10 +75,11 @@ export default class WaterBills extends Component {
                 <tbody>
                   {this.state.waters.map((water) => (
                     <tr v-for="item in tableItems" key={water.id}>
-                      <td>{water.id}</td>
+                      <td>{water.billId}</td>
                       <td>{moment(water.water_Date).format("DD-MM-YYYY")}</td>
                       <td>{water.old_Number}</td>
                       <td>{water.water_Number}</td>
+                      <td>{water.water_Number-water.old_Number}</td>
                       <td>
                         {Intl.NumberFormat("vi-VN", {
                           style: "currency",

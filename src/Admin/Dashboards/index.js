@@ -8,7 +8,6 @@ import BasicDashboard from './Basic/';
 // Layout
 
 import AppSidebar from '../../Layout/AppSidebar/';
-import AppFooter from '../../Layout/AppFooter/';
 import AppHeader from '../../Layout/AppHeader';
 
 const Dashboards = () => (
@@ -18,7 +17,7 @@ const Dashboards = () => (
             <AppSidebar />
             <div className="app-main__outer">
                 <div className="app-main__inner">
-                    <Route path={`/dashboards`} component={BasicDashboard} />
+                    <Route path={`/dashboard`} component={BasicDashboard} />
                 </div>
             </div>
         </div>

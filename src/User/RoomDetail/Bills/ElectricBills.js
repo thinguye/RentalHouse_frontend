@@ -42,7 +42,7 @@ export default class ElectricBills extends Component {
               previous: "Trang đầu",
             },
           },
-          columns: [{ orderable: false }, null, null, null, null, null],
+          columns: [null, null,null, null, null, null, null],
         });
       }, 100);
     });
@@ -68,6 +68,7 @@ export default class ElectricBills extends Component {
                     <td>Ngày</td>
                     <td>Số cũ</td>
                     <td>Số mới</td>
+                    <td>Điện tiêu thụ</td>
                     <td>Giá điện</td>
                     <td>Tổng tiền</td>
                   </tr>
@@ -75,12 +76,13 @@ export default class ElectricBills extends Component {
                 <tbody>
                   {this.state.electrics.map((electric) => (
                     <tr v-for="item in tableItems" key={electric.id}>
-                      <td>{electric.id}</td>
+                      <td>{electric.billId}</td>
                       <td>
                         {moment(electric.electric_Date).format("DD-MM-YYYY")}
                       </td>
                       <td>{electric.old_Number}</td>
                       <td>{electric.electric_Number}</td>
+                      <td>{electric.electric_Number-electric.old_Number}</td>
                       <td>
                         {Intl.NumberFormat("vi-VN", {
                           style: "currency",

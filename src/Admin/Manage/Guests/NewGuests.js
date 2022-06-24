@@ -27,13 +27,10 @@ export default class NewGuests extends Component {
     guests: [],
     redirect: false,
     showDelete: false,
-    roomName: ''
+    roomName: "",
   };
 
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
     instance
       .get(`api/Customer/current+customers`)
       .then((res) => {
@@ -41,32 +38,32 @@ export default class NewGuests extends Component {
         this.setState({ guests });
       })
       .catch((error) => console.log(error));
-      $(document).ready(function () {
-        setTimeout(function () {
-          $("#newGuests").dataTable({
-            language: {
-              search: "Tìm kiếm:",
-              info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ khách",
-              infoEmpty: "",
-              emptyTable: "Chưa có dữ liệu để hiển thị",
-              lengthMenu: "Hiển thị _MENU_ khách",
-              paginate: {
-                next: "Trang cuối",
-                previous: "Trang đầu",
-              },
+    $(document).ready(function () {
+      setTimeout(function () {
+        $("#newGuests").dataTable({
+          language: {
+            search: "Tìm kiếm:",
+            info: "Hiển thị  _START_ đến _END_ trong _TOTAL_ khách",
+            infoEmpty: "",
+            emptyTable: "Chưa có dữ liệu để hiển thị",
+            lengthMenu: "Hiển thị _MENU_ khách",
+            paginate: {
+              next: "Trang cuối",
+              previous: "Trang đầu",
             },
-            columns: [
-              null,
-              { orderable: false },
-              { orderable: false },
-              { orderable: false },
-              null,
-              { orderable: false },
-              { orderable: false },
-            ],
-          });
-        }, 100);
-      });
+          },
+          columns: [
+            null,
+            { orderable: false },
+            { orderable: false },
+            { orderable: false },
+            null,
+            { orderable: false },
+            { orderable: false },
+          ],
+        });
+      }, 100);
+    });
   }
 
   // setName(id) {
@@ -101,9 +98,8 @@ export default class NewGuests extends Component {
 
   setRedirect = (id, e) => {
     sessionStorage.setItem("guestId", id);
-    window.location.href="/manage/guest"
+    window.location.href = "/manage/guest";
   };
-
 
   handleShowDelete = (guestId) => {
     this.setState({
@@ -119,6 +115,13 @@ export default class NewGuests extends Component {
   };
 
   render() {
+    if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
+      window.location.href = "/";
+    }
+    var index = 1;
     return (
       <Fragment>
         <TransitionGroup>
@@ -134,6 +137,7 @@ export default class NewGuests extends Component {
               <Table id="newGuests">
                 <thead style={{ color: "blue" }}>
                   <tr>
+                    <td className="text-center">STT</td>
                     <td className="text-center">Họ và tên</td>
                     <td className="text-center">Số điện thoại</td>
                     <td className="text-center">Ngày sinh</td>
@@ -146,12 +150,17 @@ export default class NewGuests extends Component {
                 <tbody>
                   {this.state.guests.map((guest) => (
                     <tr v-for="item in tableItems" key={guest.id}>
+                      <td className="text-center">{index++}</td>
                       <td className="text-center">{guest.name}</td>
                       <td className="text-center">{guest.phone}</td>
-                      <td className="text-center">{moment(guest.doB).format("DD-MM-YYYY")}</td>
+                      <td className="text-center">
+                        {moment(guest.doB).format("DD-MM-YYYY")}
+                      </td>
                       <td className="text-center">{guest.id_Number}</td>
-                      <td className="text-center">{guest.room}</td>
-                      <td className="text-center">{moment(guest.startDate).format("DD-MM-YYYY")}</td>
+                      <td className="text-center">{guest.roomName}</td>
+                      <td className="text-center">
+                        {moment(guest.startDate).format("DD-MM-YYYY")}
+                      </td>
                       <td>
                         <Row>
                           <Col>

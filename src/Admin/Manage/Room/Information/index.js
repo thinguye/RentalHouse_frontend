@@ -45,22 +45,24 @@ function getTabs() {
 export default class Room extends React.Component {
   render() {
     if (sessionStorage.getItem("role") !== "admin") {
+      if(sessionStorage.getItem("role") === "user") {
+        window.location.href ="/room";
+      }
       window.location.href = "/";
-    } else {
-      return (
-        <Fragment>
-          <PageTitle
-            heading="PHÒNG TRỌ"
-            icon="pe-7s-home icon-gradient bg-tempting-azure"
-          />
-          <Tabs
-            tabsWrapperClass="body-tabs body-tabs-layout"
-            transform={false}
-            showInkBar={true}
-            items={getTabs()}
-          />
-        </Fragment>
-      );
     }
+    return (
+      <Fragment>
+        <PageTitle
+          heading="PHÒNG TRỌ"
+          icon="pe-7s-home icon-gradient bg-tempting-azure"
+        />
+        <Tabs
+          tabsWrapperClass="body-tabs body-tabs-layout"
+          transform={false}
+          showInkBar={true}
+          items={getTabs()}
+        />
+      </Fragment>
+    );
   }
 }

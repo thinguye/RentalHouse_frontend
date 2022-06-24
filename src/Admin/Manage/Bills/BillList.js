@@ -29,9 +29,7 @@ class BillList extends Component {
   list = [];
 
   componentDidMount() {
-    if (sessionStorage.getItem("role") !== "admin") {
-      window.location.href = "/";
-    }
+    
     instance
       .get(`api/Bill`)
       .then((res) => {
@@ -136,6 +134,7 @@ class BillList extends Component {
   };
 
   render() {
+    
     return (
       <>
         <Fragment>
@@ -167,7 +166,7 @@ class BillList extends Component {
                         <td className="text-center">
                           {moment(bill.time).format("DD-MM-YYYY")}
                         </td>
-                        <td className="text-center">{bill.room}</td>
+                        <td className="text-center">{bill.roomName}</td>
                         <td className="text-center">
                           {Intl.NumberFormat("vi-VN", {
                             style: "currency",
